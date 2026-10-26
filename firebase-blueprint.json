@@ -1,0 +1,133 @@
+{
+  "entities": {
+    "Room": {
+      "title": "Room",
+      "description": "Multiplayer room for couples to play together across separate devices.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique room identifier" },
+        "code": { "type": "string", "description": "6-character human-friendly room code", "maxLength": 8 },
+        "status": {
+          "type": "string",
+          "enum": ["aguardando", "pronta", "em_andamento", "encerrada"],
+          "description": "Lifecycle state of the room"
+        },
+        "gameId": { "type": "string", "description": "Multiplayer game identifier (e.g. conhece)" },
+        "hostUid": { "type": "string", "description": "Firebase Auth UID of host" },
+        "hostName": { "type": "string", "description": "Display name of host" },
+        "hostAvatar": { "type": "string", "description": "Avatar emoji of host" },
+        "guestUid": { "type": "string", "description": "Firebase Auth UID of guest" },
+        "guestName": { "type": "string", "description": "Display name of guest" },
+        "guestAvatar": { "type": "string", "description": "Avatar emoji of guest" },
+        "scoreHost": { "type": "number", "description": "Host correct guesses score" },
+        "scoreGuest": { "type": "number", "description": "Guest correct guesses score" },
+        "currentRound": { "type": "number", "description": "Current round number (1-6)" },
+        "totalRounds": { "type": "number", "description": "Total rounds in game" },
+        "turn": { "type": "string", "enum": ["host", "guest"], "description": "Player currently answering or being guessed" },
+        "step": {
+          "type": "string",
+          "enum": ["LOBBY", "RESPONDING", "GUESSING", "REVEAL", "SUMMARY"],
+          "description": "In-game turn step"
+        },
+        "currentQuestionId": { "type": "string", "description": "ID of current question" },
+        "currentQuestionCategory": { "type": "string", "description": "Category label of current question" },
+        "currentQuestionText": { "type": "string", "description": "Question text" },
+        "currentQuestionOptions": { "type": "string", "description": "JSON string of question options" },
+        "currentChatPrompt": { "type": "string", "description": "Discussion prompt after answer" },
+        "secretAnswerId": { "type": "string", "description": "Answer submitted by respondent" },
+        "guessedAnswerId": { "type": "string", "description": "Guess submitted by partner" },
+        "hasSecretAnswer": { "type": "boolean", "description": "Whether respondent has locked in choice" },
+        "createdAt": { "type": "number", "description": "Timestamp of room creation" },
+        "lastActiveAt": { "type": "number", "description": "Timestamp of last room activity" },
+        "abandonedBy": { "type": "string", "description": "Name or UID of user who left the room" }
+      },
+      "required": ["id", "code", "status", "gameId", "hostUid", "hostName", "createdAt", "lastActiveAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Individual account profile for a player",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "Name of the player", "maxLength": 50 },
+        "avatar": { "type": "string", "description": "Player emoji avatar", "maxLength": 10 },
+        "createdAt": { "type": "number", "description": "Creation timestamp" },
+        "relationshipId": { "type": "string", "description": "ID of connected couple relationship" },
+        "partnerUid": { "type": "string", "description": "Partner user UID" },
+        "partnerName": { "type": "string", "description": "Partner display name" },
+        "partnerAvatar": { "type": "string", "description": "Partner emoji avatar" }
+      },
+      "required": ["uid", "displayName", "createdAt"]
+    },
+    "CoupleRelationship": {
+      "title": "CoupleRelationship",
+      "description": "Shared couple record linking two partners together",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique relationship identifier" },
+        "user1Id": { "type": "string", "description": "UID of first partner" },
+        "user2Id": { "type": "string", "description": "UID of second partner" },
+        "user1Name": { "type": "string", "description": "Name of first partner" },
+        "user2Name": { "type": "string", "description": "Name of second partner" },
+        "user1Avatar": { "type": "string", "description": "Avatar of first partner" },
+        "user2Avatar": { "type": "string", "description": "Avatar of second partner" },
+        "anniversaryDate": { "type": "string", "description": "Anniversary date YYYY-MM-DD" },
+        "coins": { "type": "number", "description": "Shared Love Coins" },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "connected", "disconnected"],
+          "description": "Connection status"
+        },
+        "createdAt": { "type": "number", "description": "Creation timestamp" }
+      },
+      "required": ["id", "user1Id", "user1Name", "status", "createdAt"]
+    },
+    "CoupleInvite": {
+      "title": "CoupleInvite",
+      "description": "Unique invite code for connecting couples across devices",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "description": "6-character short invite code", "maxLength": 8 },
+        "relationshipId": { "type": "string", "description": "Relationship ID" },
+        "creatorUid": { "type": "string", "description": "UID of creator" },
+        "creatorName": { "type": "string", "description": "Name of creator" },
+        "creatorAvatar": { "type": "string", "description": "Avatar of creator" },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "accepted", "expired"],
+          "description": "Invite state"
+        },
+        "createdAt": { "type": "number", "description": "Creation timestamp" },
+        "expiresAt": { "type": "number", "description": "Expiration timestamp" }
+      },
+      "required": ["code", "relationshipId", "creatorUid", "creatorName", "status", "createdAt", "expiresAt"]
+    }
+  },
+  "firestore": {
+    "/rooms/{roomId}": {
+      "schema": {
+        "$ref": "#/entities/Room"
+      },
+      "description": "Collection of multiplayer rooms"
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "Collection of individual user profiles"
+    },
+    "/relationships/{relationshipId}": {
+      "schema": {
+        "$ref": "#/entities/CoupleRelationship"
+      },
+      "description": "Collection of shared couple relationships"
+    },
+    "/invites/{code}": {
+      "schema": {
+        "$ref": "#/entities/CoupleInvite"
+      },
+      "description": "Collection of 6-character partner invite codes"
+    }
+  }
+}

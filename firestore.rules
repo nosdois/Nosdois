@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isRoomParticipant(roomData) {
+      return isSignedIn() && (
+        request.auth.uid == roomData.hostUid || 
+        request.auth.uid == roomData.guestUid
+      );
+    }
+
+    function isRelationshipMember(relData) {
+      return isSignedIn() && (
+        request.auth.uid == relData.user1Id ||
+        request.auth.uid == relData.user2Id
+      );
+    }
+
+    // Multiplayer rooms
+    match /rooms/{roomId} {
+      allow read: if isSignedIn();
+      
+      allow create: if isSignedIn() 
+        && request.resource.data.hostUid == request.auth.uid
+        && request.resource.data.status == 'aguardando';
+      
+      allow update: if isSignedIn() && (
+        isRoomParticipant(resource.data) ||
+        (
+          resource.data.status == 'aguardando' &&
+          request.resource.data.guestUid == request.auth.uid &&
+          (request.resource.data.status == 'pronta' || request.resource.data.status == 'aguardando')
+        )
+      );
+      
+      allow delete: if isSignedIn() && request.auth.uid == resource.data.hostUid;
+    }
+
+    // User accounts
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Couple relationships
+    match /relationships/{relationshipId} {
+      allow read: if isSignedIn();
+      
+      // Creator can create new relationship
+      allow create: if isSignedIn() && request.resource.data.user1Id == request.auth.uid;
+      
+      // Members can update, or partner joining an open pending relationship
+      allow update: if isSignedIn() && (
+        isRelationshipMember(resource.data) ||
+        (resource.data.user2Id == null && request.resource.data.user2Id == request.auth.uid)
+      );
+      
+      allow delete: if isSignedIn() && isRelationshipMember(resource.data);
+    }
+
+    // Couple invite codes
+    match /invites/{code} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.creatorUid == request.auth.uid;
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn() && resource.data.creatorUid == request.auth.uid;
+    }
+    
+    // Connection test document
+    match /test/{docId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Nós Dois — Hub de Jogos para Casais",
+  "description": "Hub moderno e romântico de jogos presenciais e desafios para casais se divertirem e se conhecerem ainda mais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* NÓS DOIS — PALETA DEFINITIVA */
+    --color-bg-primary: #063F39;
+    --color-bg-secondary: #073630;
+    --color-card: #082F2B;
+    --color-surface-elevated: #104B43;
+    --color-border: #17675C;
+    --color-border-subtle: rgba(23, 103, 92, 0.45);
+    
+    --color-yellow-primary: #FFD15C;
+    --color-yellow-secondary: #EAB83F;
+    --color-text-primary: #FFFDF7;
+    --color-text-secondary: #BBD9D2;
+    --color-text-muted: #8AAFA7;
+    --color-romantic: #F16D7A;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(16, 75, 67, 0.4) 0%, transparent 60%),
+      radial-gradient(circle at 100% 100%, rgba(7, 54, 48, 0.6) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    color: var(--color-text-primary);
+  }
+}
+
+/* Custom scrollbars matching theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #073630;
+}
+::-webkit-scrollbar-thumb {
+  background: #17675C;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFD15C;
+}
+
+/* Subtle animations */
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.animate-heart-pulse {
+  animation: heartPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes coinGleam {
+  0%, 100% {
+    opacity: 0.9;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(10deg) scale(1.05);
+  }
+}
+
+.animate-coin-gleam {
+  animation: coinGleam 3s ease-in-out infinite;
+}
