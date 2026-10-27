@@ -61,7 +61,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <div className="w-full md:w-5/12 flex justify-center md:justify-start shrink-0">
             <div className="relative">
               <img
-                src="/assets/ui/hero_couple.png"
+                src="./assets/ui/hero_couple.png"
                 alt="Nós Dois - Casal jogando juntos"
                 className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-[340px] h-auto object-cover rounded-3xl drop-shadow-xl"
               />
@@ -133,7 +133,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               {/* Artwork thumbnail */}
               <div className="w-full h-24 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden bg-[#073630] border border-[#17675C]/60 mb-2 relative">
                 <img
-                  src="/assets/ui/card_conhece.png"
+                  src="./assets/ui/card_conhece.png"
                   alt="Quanto Você Me Conhece?"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -171,7 +171,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div>
               <div className="w-full h-24 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden bg-[#073630] border border-[#17675C]/60 mb-2 relative">
                 <img
-                  src="/assets/ui/card_duelo.png"
+                  src="./assets/ui/card_duelo.png"
                   alt="Duelo de Casais"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -208,7 +208,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div>
               <div className="w-full h-24 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden bg-[#073630] border border-[#17675C]/60 mb-2 relative">
                 <img
-                  src="/assets/ui/card_mundinho.png"
+                  src="./assets/ui/card_mundinho.png"
                   alt="Nosso Mundinho"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -245,7 +245,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div>
               <div className="w-full h-24 sm:h-36 rounded-xl sm:rounded-2xl overflow-hidden bg-[#073630] border border-[#17675C]/60 mb-2 relative">
                 <img
-                  src="/assets/ui/card_ese.png"
+                  src="./assets/ui/card_ese.png"
                   alt="E Se Nós Dois...?"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -308,7 +308,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {/* Post-it Note Graphic */}
           <div className="w-24 sm:w-32 shrink-0 flex items-center justify-center">
             <img
-              src="/assets/ui/postit_note.png"
+              src="./assets/ui/postit_note.png"
               alt="Mais diversão juntos!"
               className="w-full h-auto drop-shadow-lg rotate-2 hover:rotate-0 transition-transform"
             />
@@ -342,7 +342,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           {/* Gift Box Graphic */}
           <div className="w-24 sm:w-32 shrink-0 flex items-center justify-center">
             <img
-              src="/assets/ui/gift_box.png"
+              src="./assets/ui/gift_box.png"
               alt="Hoje é especial!"
               className="w-full h-auto drop-shadow-lg hover:scale-105 transition-transform"
             />

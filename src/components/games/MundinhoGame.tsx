@@ -168,7 +168,7 @@ export const MundinhoGame: React.FC<MundinhoGameProps> = ({
         <div className="relative max-w-sm mx-auto mb-6">
           <div className="p-3 bg-[#073630] rounded-3xl border border-[#17675C] shadow-inner relative group">
             <img
-              src="/assets/ui/card_mundinho.png"
+              src="./assets/ui/card_mundinho.png"
               alt="Nosso Mundinho - Ilha Flutuante"
               className="w-full h-auto rounded-2xl object-cover shadow-md hover:scale-[1.02] transition-transform"
             />
